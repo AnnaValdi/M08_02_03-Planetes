@@ -8,8 +8,8 @@ import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
 
-class PlanetsAdapter (context: Context, val layout: Int, val planets: MutableList<Planet> ):
-    ArrayAdapter<Planet>(context, layout, )
+class PlanetsAdapter (context: Context, val layout: Int, var planets: MutableList<Planet> ):
+    ArrayAdapter<Planet>(context, layout, planets)
 {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
 
@@ -31,11 +31,13 @@ class PlanetsAdapter (context: Context, val layout: Int, val planets: MutableLis
         val imgPlanet = view.findViewById(R.id.ImgListPlanet)as ImageView
         imgPlanet.setImageResource(planet.image)
 
-        val lblPlanetName = view.findViewById(R.id.LblPlanetName) as TextView
-        lblPlanetName.text = planet.name
+
+        val lblPlanetName = view.findViewById(R.id.LblListPlanetName) as TextView
+        lblPlanetName.text  = planet.name
+
 
         val lblSatellites = view.findViewById(R.id.LblListSatellites) as TextView
-        lblSatellites.text = "Satellites: "+planet.satellites
+        lblSatellites.text = "Satellites: "+planet.numSatellites
 
     }
 

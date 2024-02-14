@@ -1,5 +1,6 @@
 package com.example.m08_02_03_planetes
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.AdapterView
@@ -15,11 +16,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var planets = mutableListOf(Planet("Mercury", 0, R.drawable.mercury), Planet("Venus",0, R.drawable.venus),
-                                    Planet("Earth", 1, R.drawable.earth), Planet("Mars",2, R.drawable.mars),
-                                    Planet("Jupiter", 72, R.drawable.jupiter), Planet("Saturn",82, R.drawable.saturn),
-                                    Planet("Uranus", 27, R.drawable.uranus), Planet("Neptune", 14, R.drawable.neptune))
-
+        var planets = getPlanets()
         val lstPlanets = findViewById(R.id.LstPlanets) as ListView
         val btnOk      = findViewById(R.id.BtnOk) as Button
 
@@ -29,8 +26,9 @@ class MainActivity : AppCompatActivity() {
         lstPlanets.onItemClickListener = AdapterView.OnItemClickListener(){
             _, _, i, _ ->
 
-            val lblPlanetName = findViewById(R.id.LblPlanetName) as TextView
-            lblPlanetName.text = "You have chosen the planet " + planets[i].name
+            val intent = Intent(this, DetailActivity::class.java)
+            intent.putExtra(DetailActivity.planetConstants.PLANET, planets[i])
+            startActivity(intent)
         }
 
         lstPlanets.onItemLongClickListener = AdapterView.OnItemLongClickListener()
@@ -40,7 +38,7 @@ class MainActivity : AppCompatActivity() {
             val planet = planets[i]
             planets.removeAt(i)
             adapter.notifyDataSetChanged()
-            Toast.makeText(this, "Planet "+planet+" was deleted", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Planet "+planet.name+" was deleted", Toast.LENGTH_LONG).show()
 
             true
         }
@@ -52,15 +50,30 @@ class MainActivity : AppCompatActivity() {
             val numSatellites = txtNumSatellites.text.toString().toInt()
 
             if(newPlanetName != ""){
-                val newPlanet = Planet(newPlanetName, numSatellites, R.drawable.eris)
+                val newPlanet = Planet(newPlanetName, numSatellites, R.drawable.eris, listOf())
                 planets.add(newPlanet)
                 txtNewPlanet.setText("")
                 txtNumSatellites.setText("")
                 adapter.notifyDataSetChanged()
             }else{
-                val lblPlanetName = findViewById(R.id.LblPlanetName) as TextView
-                lblPlanetName.text = "You must write the plane name"
+                //val lblPlanetName = findViewById(R.id.LblPlanetName) as TextView
+                //lblPlanetName.text = "You must write the planet name"
             }
         }
+    }
+    fun getPlanets(): MutableList<Planet>{
+        return mutableListOf(Planet("Mercury", 0, R.drawable.mercury, listOf()), Planet("Venus",0, R.drawable.venus, listOf()),
+            Planet("Earth", 1, R.drawable.earth, listOf(Satellite("Moon", R.drawable.earth))), Planet("Mars",2, R.drawable.mars, listOf()),
+            Planet("Jupiter", 72, R.drawable.jupiter, listOf(Satellite("Ie", R.drawable.earth), Satellite("Europa", R.drawable.earth))), Planet("Saturn",82, R.drawable.saturn, listOf()),
+            Planet("Uranus", 27, R.drawable.uranus, listOf(Satellite("Titan", R.drawable.earth))), Planet("Neptune", 14, R.drawable.neptune, listOf(Satellite("Triton", R.drawable.earth))),
+            Planet("Mercury", 0, R.drawable.mercury, listOf()), Planet("Venus",0, R.drawable.venus, listOf()),
+            Planet("Earth", 1, R.drawable.earth, listOf(Satellite("Moon", R.drawable.earth))), Planet("Mars",2, R.drawable.mars, listOf()),
+            Planet("Jupiter", 72, R.drawable.jupiter, listOf(Satellite("Ie", R.drawable.earth), Satellite("Europa", R.drawable.earth))), Planet("Saturn",82, R.drawable.saturn, listOf()),
+            Planet("Uranus", 27, R.drawable.uranus, listOf(Satellite("Titan", R.drawable.earth))), Planet("Neptune", 14, R.drawable.neptune, listOf(Satellite("Triton", R.drawable.earth))),
+            Planet("Mercury", 0, R.drawable.mercury, listOf()), Planet("Venus",0, R.drawable.venus, listOf()),
+            Planet("Earth", 1, R.drawable.earth, listOf(Satellite("Moon", R.drawable.earth))), Planet("Mars",2, R.drawable.mars, listOf()),
+            Planet("Jupiter", 72, R.drawable.jupiter, listOf(Satellite("Ie", R.drawable.earth), Satellite("Europa", R.drawable.earth))), Planet("Saturn",82, R.drawable.saturn, listOf()),
+            Planet("Uranus", 27, R.drawable.uranus, listOf(Satellite("Titan", R.drawable.earth))), Planet("Neptune", 14, R.drawable.neptune, listOf(Satellite("Triton", R.drawable.earth))))
+
     }
 }
