@@ -9,8 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 
 class DetailActivity: AppCompatActivity()
 {
-    object planetConstants
-    {
+    object planetConstants{
         const val PLANET = "PLANET"
     }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,16 +19,16 @@ class DetailActivity: AppCompatActivity()
         val intent = getIntent()
         val planet = intent.getSerializableExtra(planetConstants.PLANET) as Planet
 
-        val lblPlanetName  = findViewById(R.id.LblDetailPlanetName) as TextView
+        val lblPlanetName = findViewById(R.id.LblDetailPlanetName) as TextView
         val imgPlanetImage = findViewById(R.id.ImgDetailPlanetImage) as ImageView
-        val lstSatellites  = findViewById(R.id.LstSatellites) as GridView
-        val btnBack        = findViewById(R.id.BtnBack) as Button
+        val lstSatellites = findViewById(R.id.LblListSatellites) as GridView
+        val btnBack = findViewById(R.id.BtnBack) as Button
 
         lblPlanetName.text = planet.name
         imgPlanetImage.setImageResource(planet.image)
 
-
         val adapter = SatellitesAdapter(this, R.layout.satellites_item, planet.satellites)
         lstSatellites.adapter = adapter
+
     }
 }
